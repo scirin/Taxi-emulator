@@ -5,7 +5,7 @@ use uuid::Uuid;
 
 use chrono::Utc;
 use lambda_runtime::{error::HandlerError, lambda, Context};
-use log::debugl
+use log::debug;
 use rand::thread_rng;
 use rand::seq::IteratorRandom;
 use rusoto_core::Region;
