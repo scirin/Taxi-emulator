@@ -1,0 +1,18 @@
+[package]
+name = "lambda_1"
+version = "0.1.0"
+edition = "2018"
+
+[dependencies]
+tokio = { version = "1.20.1", features = ["macros"] }
+serde = "1.0"
+chrono = "0.4"
+lambda_runtime = {git = "https://github.com/awslabs/aws-lambda-rust-runtime", branch="main"}
+log = "0.4"
+rand = "0.8.5"
+rusoto_core = {version = "0.48.0", default_features = false, features=["rustls"]}
+rusoto_dynamodb = {version = "0.48.0", default_features = false, features=["rustls"]}
+serde_derive = "1.0"
+serde_json = "1.0"
+simple_logger = "2.3.0"
+uuid = {version = "1.1.2", features = ["v4"]}
