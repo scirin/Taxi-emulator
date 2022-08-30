@@ -37,14 +37,14 @@ HandlerError> {
         .to_owned();
     debug!("USERNAME: {}, username");
     // Generate unique ID of a ride and exrtact the body of a request 
-        let ride_id = Uuid::new_v4().to_string
+        let ride_id = Uuid::new_v4().to_string;
         let request: RequestBody = serdejson::from_str(&event.body).unwrap();
         let car = find_car(&request.pickup_location);
         record_ride(&client, &ride_id, &username, &car).unwrap();
         // After record is added in DB, construct a response
         let body = ResponseBody {
             ride_id: ride_id.clone(),
-            car_nameL car.name.clone(),
+            car_name: car.name.clone(),
             car,
             eta: "30 seconds".into(),
             rider: username.clone(),
