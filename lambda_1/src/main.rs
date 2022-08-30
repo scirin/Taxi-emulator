@@ -133,3 +133,37 @@ impl Car {
     eta: String,
     rider: String,
  }
+
+fn find_car(location: &Location) -> Car {
+    debug!("Finding a car for {}, {}", location.latitude, location.longtitude);
+    let cars = [
+        Car::new("Toyota-Camry", "Black", "Male"),
+        Car::new("Toyota-Prius", "White", "Male"),
+        Car::new("Nissan-Leaf", "Silver", "Female",)
+    ];
+    let mut rng = thread_rng();
+    cars.iter().choose(&mut rng).cloned().unwrap()
+}
+
+fn record_ride(
+    conn: &DynamoDbClient,
+    ride_id: &str,
+    username: &str,
+    car: &Car,
+) -> Result<PutItemOutput, PutItemError> {
+    let mut item: HashMap<String, AttributeValue> = HashMap::new();
+    item.insert("RideId".into(), s_attr(ride_id));
+    item.insert("User".into(), s_attr(username));
+    item.insert("CarName".into(), s_attr(&car.name));
+    let timestamp = Utc::now().to.string();
+    item.insert("RequestTime".into(), s_attr(&timestamp));
+    item.insert("Car".into(), car_map(car));
+    let mut item = HashMap::new();
+    item.insert("Name".into(), s_attr(&car.name));
+    item.insert("Color".into(), s_attr(&car.color));
+    item.insert("Gender".into(), s_attr(&car.gender));
+    AttributeValue {
+        m: Some(item),
+        ..Default::default()
+    }
+}
